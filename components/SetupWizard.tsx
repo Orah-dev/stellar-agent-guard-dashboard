@@ -76,23 +76,36 @@ export function SetupWizard() {
         : initializedRead,
     [demo, initializedRead],
   );
-  // Tracks whether the initialized read has been explicitly recovered after a refresh
-  const [initializedRecovered, setInitializedRecovered] = useState<boolean>(false);
+  // Which guard the recovery was confirmed under, or null when this guard has
+  // not recovered yet — keying it the same way the read above is keyed, so
+  // leaving a guard cannot leave its recovery ticked on the next one.
+  const [recoveredState, setRecoveredState] = useState<{ guard: string } | null>(null);
+  const initializedRecovered = recoveredState?.guard === guard;
   // `recoverInitialized` forces a fresh read from the chain to recover the
   // initialized state after a refresh, ensuring the operator explicitly
   // confirms the guard's initialization status rather than relying on a
-  // potentially stale snapshot.
+  // potentially stale snapshot. It writes through the same guard-keyed state
+  // the mount effect and the read-only retry use, and is bound to the guard it
+  // started under so a late answer for a guard the operator has left is
+  // discarded rather than rendering as this guard's state.
   const recoverInitialized = useCallback(async () => {
-    setInitializedRead({ ok: false, error: "reading initialize state…" });
-    setInitializedRecovered(false);
+    const target = guard;
+    setInitializedState({
+      guard: target,
+      value: { ok: false, error: "reading initialize state…" },
+    });
+    setRecoveredState(null);
     try {
-      const value = await isInitialized(server, guard);
-      setInitializedRead({ ok: true, value });
-      setInitializedRecovered(true);
+      const value = await isInitialized(server, target);
+      setInitializedState({ guard: target, value: { ok: true, value } });
+      setRecoveredState({ guard: target });
     } catch (error) {
-      setInitializedRead({
-        ok: false,
-        error: error instanceof Error ? error.message : String(error),
+      setInitializedState({
+        guard: target,
+        value: {
+          ok: false,
+          error: error instanceof Error ? error.message : String(error),
+        },
       });
     }
   }, [server, guard]);

@@ -43,8 +43,9 @@ test("deploy cost covers the protocol fee and rent minimum for an upload-and-cre
     contractInstanceFeeXlmToStroops: 2500000n,
     initialRentDepositXlmToStroops: 10001624n,
     totalRequiredXlmToStroops: 18601624n,
-    sourceNote: "Fees are estimates based on current network conditions and may vary at signing time.",
-});
+    sourceNote:
+      "Fees are estimates based on current network conditions and may vary at signing time.",
+  });
 });
 
 test("a deploy with a low balance warns before the minimum reserve is reached", () => {

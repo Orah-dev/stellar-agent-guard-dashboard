@@ -173,7 +173,10 @@ test("JSON export serialises with insertion-ordered keys (schemaVersion → colu
 test("filename is deterministic: guard prefix, UTC day, row count, extension", () => {
   const name = exportFilename(GUARD, "csv", 42, Date.parse("2026-09-24T10:00:00Z"));
   assert.match(name, /^guard-events-CAPADGEK-2026-09-24-42\.csv$/);
-  assert.match(exportFilename(GUARD, "json", 42, Date.parse("2026-09-24T10:00:00Z")), /\.[jt]sons?$/);
+  assert.match(
+    exportFilename(GUARD, "json", 42, Date.parse("2026-09-24T10:00:00Z")),
+    /\.[jt]sons?$/,
+  );
 });
 
 test("an empty feed exports a header-only CSV and an empty-rows JSON", () => {

@@ -896,23 +896,35 @@ export function DeployPanel() {
           >
             <div>
               <div className="tiny muted">Base tx fee (estimate)</div>
-              <div className="mono">{deployCost.baseFeeXlm} XLM ({deployCost.baseFeeXlmToStroops} stroops)</div>
+              <div className="mono">
+                {deployCost.baseFeeXlm} XLM ({deployCost.baseFeeXlmToStroops} stroops)
+              </div>
             </div>
             <div>
               <div className="tiny muted">WASM upload (estimate)</div>
-              <div className="mono">{deployCost.wasmUploadFeeXlm} XLM ({deployCost.wasmUploadFeeXlmToStroops} stroops)</div>
+              <div className="mono">
+                {deployCost.wasmUploadFeeXlm} XLM ({deployCost.wasmUploadFeeXlmToStroops} stroops)
+              </div>
             </div>
             <div>
               <div className="tiny muted">Contract instance (estimate)</div>
-              <div className="mono">{deployCost.contractInstanceFeeXlm} XLM ({deployCost.contractInstanceFeeXlmToStroops} stroops)</div>
+              <div className="mono">
+                {deployCost.contractInstanceFeeXlm} XLM (
+                {deployCost.contractInstanceFeeXlmToStroops} stroops)
+              </div>
             </div>
             <div>
               <div className="tiny muted">Initial rent (estimate)</div>
-              <div className="mono">{deployCost.initialRentDepositXlm} XLM ({deployCost.initialRentDepositXlmToStroops} stroops)</div>
+              <div className="mono">
+                {deployCost.initialRentDepositXlm} XLM ({deployCost.initialRentDepositXlmToStroops}{" "}
+                stroops)
+              </div>
             </div>
             <div>
               <div className="tiny muted">Required total (estimate)</div>
-              <div className="mono">{deployCost.totalRequiredXlm} XLM ({deployCost.totalRequiredXlmToStroops} stroops)</div>
+              <div className="mono">
+                {deployCost.totalRequiredXlm} XLM ({deployCost.totalRequiredXlmToStroops} stroops)
+              </div>
             </div>
             <div>
               <div className="tiny muted">Wallet balance</div>

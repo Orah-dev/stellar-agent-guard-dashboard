@@ -70,7 +70,8 @@ function compareDecimalStrings(left: string, right: string): number {
   if (diff < 0n) return -1;
   if (diff > 0n) return 1;
   return 0;
-}function computeInitialRentDeposit(input: DeployCostInput): string {
+}
+function computeInitialRentDeposit(input: DeployCostInput): string {
   if (!input.uploadWasm) return "0.0000000";
   const perByteRent = 25_375n;
   const bytes = BigInt(Math.max(0, input.contractInstanceBytes));
@@ -98,9 +99,9 @@ function computeStroopsBreakdown(input: DeployCostInput): {
   const initialRentDepositXlmToStroops = computeInitialRentDepositStroops(input);
   const totalRequiredXlmToStroops = BigInt(
     baseFeeXlmToStroops +
-    wasmUploadFeeXlmToStroops +
-    contractInstanceFeeXlmToStroops +
-    initialRentDepositXlmToStroops,
+      wasmUploadFeeXlmToStroops +
+      contractInstanceFeeXlmToStroops +
+      initialRentDepositXlmToStroops,
   );
 
   return {
@@ -134,7 +135,7 @@ export function calculateDeployCost(input: DeployCostInput): DeployCostBreakdown
   // Determine source note based on warning state
   let sourceNote: string | undefined;
   if (warning) {
-    sourceNote = `Balance is below the reserve safety threshold (${safetyBufferXlm} XLM cushion): fund at least ${(Number(totalRequiredXlm) + Number(safetyBufferXlm)).toFixed(7,)} XLM before signing. Fees are estimates based on current network conditions and may vary at signing time.`;
+    sourceNote = `Balance is below the reserve safety threshold (${safetyBufferXlm} XLM cushion): fund at least ${(Number(totalRequiredXlm) + Number(safetyBufferXlm)).toFixed(7)} XLM before signing. Fees are estimates based on current network conditions and may vary at signing time.`;
   } else {
     sourceNote = `Fees are estimates based on current network conditions and may vary at signing time.`;
   }
